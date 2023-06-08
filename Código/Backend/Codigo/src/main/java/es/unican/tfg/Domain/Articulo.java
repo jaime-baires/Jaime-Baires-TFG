@@ -17,14 +17,37 @@ public class Articulo {
 	private double stock;
 	private double stockSeguridad;
 	private double descuento;
-	private double IVA;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20, nullable=false)
+	private Unidad unidad;
+	
+	@Enumerated(EnumType.STRING)
+	@Column(length = 20, nullable=false)
+	private TipoIVA IVA;
 	
 	@OneToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "categoria_id")
+	@JoinColumn(name = "categoria_id", nullable=false)
 	private Categoria categoria;
 	
 	public Articulo() {
 		
+	}
+
+	public TipoIVA getIva() {
+		return IVA;
+	}
+
+	public void setIva(TipoIVA iva) {
+		this.IVA = iva;
+	}
+
+	public Unidad getUnidad() {
+		return unidad;
+	}
+
+	public void setUnidad(Unidad unidad) {
+		this.unidad = unidad;
 	}
 
 	public Categoria getCategoria() {
@@ -74,12 +97,6 @@ public class Articulo {
 	}
 	public void setDescuento(double descuento) {
 		this.descuento = descuento;
-	}
-	public double getIVA() {
-		return IVA;
-	}
-	public void setIVA(double iVA) {
-		IVA = iVA;
 	}
 
 }

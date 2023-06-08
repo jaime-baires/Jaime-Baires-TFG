@@ -43,7 +43,8 @@ public class ArticulosController {
     	currentArticulo.setStock(articulo.getStock());
     	currentArticulo.setStockSeguridad(articulo.getStockSeguridad());
     	currentArticulo.setDescuento(articulo.getDescuento());
-    	currentArticulo.setIVA(articulo.getIVA());
+    	currentArticulo.setUnidad(articulo.getUnidad());
+    	currentArticulo.setIva(articulo.getIva());
     	currentArticulo = articuloRepository.save(articulo);
 
         return ResponseEntity.ok(currentArticulo);
