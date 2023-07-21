@@ -25,28 +25,43 @@ public class CategoriasController {
         return categoriaRepository.findAll();
     }
 
-    @GetMapping("/{id}")
-    public Categoria getCategoria(@PathVariable Long id) {
-        return categoriaRepository.findById(id).orElseThrow(RuntimeException::new);
+    @GetMapping("/{nombre}")
+    public ResponseEntity<Categoria> getCategoria(@PathVariable String nombre) {
+    	Categoria categoria;
+    	try {
+    		categoria = categoriaRepository.findById(nombre).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(404).build();
+    	}
+        return ResponseEntity.ok(categoria);
     }
     
     @PostMapping
-    public ResponseEntity createCategoria(@RequestBody Categoria categoria) throws URISyntaxException {
+    public ResponseEntity<Categoria> createCategoria(@RequestBody Categoria categoria) throws URISyntaxException {
     	Categoria nuevaCategoria = categoriaRepository.save(categoria);
-        return ResponseEntity.created(new URI("/categorias/" + nuevaCategoria.getId())).body(nuevaCategoria);
+        return ResponseEntity.created(new URI("/categorias/" + nuevaCategoria.getNombre())).body(nuevaCategoria);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity updateCategoria(@PathVariable Long id, @RequestBody Categoria categoria) {
-    	Categoria current = categoriaRepository.findById(id).orElseThrow(RuntimeException::new);
+    @PutMapping("/{nombre}")
+    public ResponseEntity<Categoria> updateCategoria(@PathVariable String nombre, @RequestBody Categoria categoria) {
+    	Categoria current = categoriaRepository.findById(nombre).get();
+    	if (current == null) {
+    		return ResponseEntity.status(400).build();
+    	}
     	current.setNombre(categoria.getNombre());
 
         return ResponseEntity.ok(current);
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity deleteCategoria(@PathVariable Long id) {
-    	categoriaRepository.deleteById(id);
+    @DeleteMapping("/{nombre}")
+    public ResponseEntity deleteCategoria(@PathVariable String nombre) {
+    	try {
+    		Categoria current = categoriaRepository.findById(nombre).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(400).build();
+    	}
+    	
+    	categoriaRepository.deleteById(nombre);
         return ResponseEntity.ok().build();
     }
 

@@ -3,6 +3,8 @@ package es.unican.tfg.Domain;
 import java.util.Date;
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Proveedor")
 public class Proveedor {
@@ -10,7 +12,8 @@ public class Proveedor {
 	@Id
     @GeneratedValue
     private Long id;
-	private String descripcion;
+	private String nombre;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fechaAlta;
 	private String NIF;
 	private String direccion;
@@ -30,12 +33,12 @@ public class Proveedor {
 		this.id = id;
 	}
 
-	public String getDescripcion() {
-		return descripcion;
+	public String getNombre() {
+		return nombre;
 	}
 
-	public void setDescripcion(String descripcion) {
-		this.descripcion = descripcion;
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
 	}
 
 	public Date getFechaAlta() {

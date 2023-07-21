@@ -1,5 +1,5 @@
 package es.unican.tfg.Domain;
 
 public enum TipoIVA {
-	CERO, CUATRO, CINCO, DIEZ, VEINTIUNO
+	EXENTO, SUPER_REDUCIDO, REDUCIDO_5, REDUCIDO, GENERAL
 }

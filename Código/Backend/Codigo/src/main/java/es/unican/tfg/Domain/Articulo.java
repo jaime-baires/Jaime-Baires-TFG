@@ -4,6 +4,8 @@ import java.util.*;
 
 import javax.persistence.*;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "Articulo")
 public class Articulo {
@@ -12,6 +14,7 @@ public class Articulo {
     @GeneratedValue
     private Long id;
 	private String descripcion;
+	@JsonFormat(pattern="yyyy-MM-dd")
 	private Date fechaAlta;
 	private double precio;
 	private double stock;
@@ -26,7 +29,7 @@ public class Articulo {
 	@Column(length = 20, nullable=false)
 	private TipoIVA IVA;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "categoria_id", nullable=false)
 	private Categoria categoria;
 	

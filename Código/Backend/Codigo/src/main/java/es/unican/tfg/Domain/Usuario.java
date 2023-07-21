@@ -1,6 +1,5 @@
 package es.unican.tfg.Domain;
 
-import javax.persistence.Column;
 import javax.persistence.*;
 
 @Entity
@@ -15,8 +14,10 @@ public class Usuario {
 	@Column(unique = true)
 	private String usuario;
 	
-	private String contraseña;
-	private boolean esAdmin;
+	private String password;
+	
+	@OneToOne(fetch = FetchType.EAGER)
+	private Rol rol;
 	
 	public Usuario() {
 
@@ -46,20 +47,20 @@ public class Usuario {
 		this.usuario = usuario;
 	}
 
-	public String getContraseña() {
-		return contraseña;
+	public String getPassword() {
+		return password;
 	}
 
-	public void setContraseña(String contraseña) {
-		this.contraseña = contraseña;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public boolean isEsAdmin() {
-		return esAdmin;
+	public Rol getRol() {
+		return rol;
 	}
 
-	public void setEsAdmin(boolean esAdmin) {
-		this.esAdmin = esAdmin;
+	public void setRol(Rol rol) {
+		this.rol = rol;
 	}
 
 }

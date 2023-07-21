@@ -26,20 +26,31 @@ public class ProveedoresController {
     }
 
     @GetMapping("/{id}")
-    public Proveedor getProveedor(@PathVariable Long id) {
-        return proveedorRepository.findById(id).orElseThrow(RuntimeException::new);
+    public ResponseEntity<Proveedor> getProveedor(@PathVariable Long id) {
+    	Proveedor proveedor;
+    	try {
+    		proveedor = proveedorRepository.findById(id).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(404).build();
+    	}
+        return ResponseEntity.ok(proveedor);
     }
     
     @PostMapping
-    public ResponseEntity createProveedor(@RequestBody Proveedor proveedor) throws URISyntaxException {
+    public ResponseEntity<Proveedor> createProveedor(@RequestBody Proveedor proveedor) throws URISyntaxException {
     	Proveedor proveedorGuardado = proveedorRepository.save(proveedor);
         return ResponseEntity.created(new URI("/proveedores/" + proveedorGuardado.getId())).body(proveedorGuardado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateProveedor(@PathVariable Long id, @RequestBody Proveedor proveedor) {
-    	Proveedor currentProveedor = proveedorRepository.findById(id).orElseThrow(RuntimeException::new);
-    	currentProveedor.setDescripcion(proveedor.getDescripcion());
+    public ResponseEntity<Proveedor> updateProveedor(@PathVariable Long id, @RequestBody Proveedor proveedor) {
+    	Proveedor currentProveedor;
+    	try {
+    		currentProveedor = proveedorRepository.findById(id).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(404).build();
+    	}
+    	currentProveedor.setNombre(proveedor.getNombre());
     	currentProveedor.setFechaAlta(proveedor.getFechaAlta());
     	currentProveedor.setNIF(proveedor.getNIF());
     	currentProveedor.setDireccion(proveedor.getDireccion());
@@ -53,6 +64,11 @@ public class ProveedoresController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteProveedor(@PathVariable Long id) {
+    	try {
+    		Proveedor proveedor = proveedorRepository.findById(id).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(400).build();
+    	}
     	proveedorRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }

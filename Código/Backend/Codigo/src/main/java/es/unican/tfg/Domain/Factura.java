@@ -18,7 +18,7 @@ public class Factura {
 	@Column(length = 20, nullable=false)
 	private TipoFactura tipo;
 	
-	@OneToOne(fetch = FetchType.LAZY)
+	@OneToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "proveedor_id")
 	private Proveedor proveedor;
 	

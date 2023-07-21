@@ -3,19 +3,14 @@ package es.unican.tfg.Domain;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "Categoria")
-public class Categoria {
+@Table(name = "Rol")
+public class Rol {
 	
 	@Id
 	private String nombre;
 	
-	public Categoria() {
+	public Rol() {
 		
-	}
-	
-	public Categoria(String nombre) {
-		super();
-		this.nombre = nombre;
 	}
 
 	public String getNombre() {

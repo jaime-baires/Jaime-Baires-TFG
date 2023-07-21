@@ -4,5 +4,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import es.unican.tfg.Domain.Usuario;
 
 public interface UsuarioRepository extends JpaRepository<Usuario, Long> {
+	
+	public Usuario findByUsuario(String usuario);
 
 }

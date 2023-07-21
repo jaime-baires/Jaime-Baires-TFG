@@ -24,19 +24,30 @@ public class ArticulosController {
     }
 
     @GetMapping("/{id}")
-    public Articulo getArticulo(@PathVariable Long id) {
-        return articuloRepository.findById(id).orElseThrow(RuntimeException::new);
+    public ResponseEntity<Articulo> getArticulo(@PathVariable Long id) {
+    	Articulo articulo;
+    	try {
+    		articulo = articuloRepository.findById(id).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(404).build();
+    	}
+        return ResponseEntity.ok(articulo);
     }
     
     @PostMapping
-    public ResponseEntity createArticulo(@RequestBody Articulo articulo) throws URISyntaxException {
+    public ResponseEntity<Articulo> createArticulo(@RequestBody Articulo articulo) throws URISyntaxException {
     	Articulo articuloGuardado = articuloRepository.save(articulo);
         return ResponseEntity.created(new URI("/articulos/" + articuloGuardado.getId())).body(articuloGuardado);
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity updateArticulo(@PathVariable Long id, @RequestBody Articulo articulo) {
-    	Articulo currentArticulo = articuloRepository.findById(id).orElseThrow(RuntimeException::new);
+    public ResponseEntity<Articulo> updateArticulo(@PathVariable Long id, @RequestBody Articulo articulo) {
+    	Articulo currentArticulo;
+    	try {
+    		currentArticulo = articuloRepository.findById(id).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(404).build();
+    	}
     	currentArticulo.setDescripcion(articulo.getDescripcion());
     	currentArticulo.setFechaAlta(articulo.getFechaAlta());
     	currentArticulo.setPrecio(articulo.getPrecio());
@@ -52,6 +63,11 @@ public class ArticulosController {
 
     @DeleteMapping("/{id}")
     public ResponseEntity deleteArticulo(@PathVariable Long id) {
+    	try {
+    		Articulo articulo = articuloRepository.findById(id).get();
+    	} catch (Exception e) {
+    		return ResponseEntity.status(400).build();
+    	}
     	articuloRepository.deleteById(id);
         return ResponseEntity.ok().build();
     }
