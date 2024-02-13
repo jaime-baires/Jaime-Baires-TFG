@@ -14,7 +14,7 @@ public class WebSecurityConfig
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.csrf().disable();
         /*
         .authorizeRequests()
         .antMatchers("/api/login").permitAll() // Permitir el acceso al endpoint de login sin autenticación
@@ -23,7 +23,6 @@ public class WebSecurityConfig
         .addFilter(new JwtAuthenticationFilter(authenticationManager()))
         .addFilter(new JwtAuthorizationFilter(authenticationManager()))
         */
-        ;
     }
 
     /*
